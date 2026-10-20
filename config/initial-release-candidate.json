@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "kind": "FIRST_RELEASE_PINNED_SOURCE",
+  "repository": "pgextwin/pgtap",
+  "extension": "pgtap",
+  "releasePolicy": "manual-only",
+  "candidateId": "d2988a25e59025d4764a",
+  "source": {
+    "repository": "theory/pgtap",
+    "ref": "v1.3.4",
+    "version": "1.3.4",
+    "commit": "968eb53a33114e83042b3bdb0c664b5b80cf8bdf"
+  }
+}
