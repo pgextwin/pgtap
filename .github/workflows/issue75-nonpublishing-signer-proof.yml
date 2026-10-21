@@ -7,6 +7,7 @@ on:
       - .github/workflows/issue75-nonpublishing-signer-proof.yml
 
 # One-time, explicitly restricted; no Release, Tag, Publisher, catalog or Secrets.
+# Recheck genuine signer on the protected canonical-name repair push; never publish.
 permissions:
   contents: read
 
