@@ -120,3 +120,22 @@ jobs:
       actions: read
       attestations: read
     uses: pgextwin/build/.github/workflows/verify-signed-candidate-readonly.yml@069eca1a2ac09f01cab86452cf1eb24feda4dfc4
+
+  verified_pin_auto_merge:
+    name: Register protected native Auto-merge for verified immutable workflow pins
+    if: >-
+      ${{ github.event_name == 'workflow_run' &&
+          github.event.action == 'completed' &&
+          github.event.workflow_run.event == 'pull_request' &&
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.name == 'Windows CI/CD' &&
+          startsWith(github.event.workflow_run.head_branch, 'auto-pin/') &&
+          github.ref == 'refs/heads/main' }}
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: read
+    uses: pgextwin/build/.github/workflows/verified-pin-automerge.yml@20e3504da28f99b7a8f5e3051feca58430a4e9c0
+    with:
+      windows_run_id: ${{ github.event.workflow_run.id }}
+      expected_central_sha: 20e3504da28f99b7a8f5e3051feca58430a4e9c0
