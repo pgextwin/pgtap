@@ -26,7 +26,7 @@ jobs:
     if: github.event_name == 'schedule'
     permissions:
       contents: read
-    uses: pgextwin/build/.github/workflows/operator-update-auto.yml@bd35b7c702f80568b3bdd2cea235bac9930d095f
+    uses: pgextwin/build/.github/workflows/operator-update-auto.yml@20e3504da28f99b7a8f5e3051feca58430a4e9c0
     with:
       detector_sha: acd6eb28be6d750e89b626fa4ccd4403e1265cd6
 
