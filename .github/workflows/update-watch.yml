@@ -119,7 +119,7 @@ jobs:
       contents: read
       actions: read
       attestations: read
-    uses: pgextwin/build/.github/workflows/verify-signed-candidate-readonly.yml@df9847fa265c06c8f8602a72cfb0fcde52ee46df
+    uses: pgextwin/build/.github/workflows/verify-signed-candidate-readonly.yml@a3546d2ff536fc02c0736e687f9a2451460ded26
 
 # GitHub native Auto-merge via GITHUB_TOKEN was proven to merge without triggering
 # a protected-main push Windows CI (PR #41, merge d48f8e8). Fail closed: do not
