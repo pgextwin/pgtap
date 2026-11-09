@@ -13,9 +13,9 @@
 1. PostgreSQL環境のバックアップを取得し、[上流ドキュメント](https://github.com/theory/pgtap)で必要条件を確認します。
 2. 既存ファイルを置き換える前にPostgreSQLを停止し、対応するZIPを展開します。
 3. ZIPに含まれるlib/とshare/extension/以下のファイルを、PostgreSQLの同名ディレクトリに配置します。
-4. PostgreSQLを起動し、利用するデータベースでCREATE EXTENSION pgtap;を実行します。
+4. PostgreSQLを起動し、利用するデータベースで`CREATE EXTENSION pgtap;`を実行します。
 
-ReleaseのSHA256SUMS.txtでZIPを照合してください。SPDX形式のSBOM、脆弱性レポート、署名付き証明の有無もReleaseで確認できます。本番導入前に動作確認を行ってください。
+ダウンロードしたZIPを、Releaseに掲載された`SHA256SUMS.txt`と照合してください。SPDX形式のSBOM、脆弱性レポート、署名付き証明の有無もReleaseで確認できます。本番環境に導入する前に、動作を確認してください。
 
 ## 上流プロジェクトとライセンス
 
