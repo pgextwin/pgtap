@@ -39,8 +39,38 @@ if($name -ne 'pgtap'){
   New-Item (Join-Path $stage 'lib') -ItemType Directory -Force|Out-Null
   Copy-Item $dll (Join-Path $stage 'lib') -Force
 }
-Copy-Item (Join-Path $PSScriptRoot '../../LICENSE') (Join-Path $stage 'LICENSE') -Force
-if(Test-Path (Join-Path $UpstreamDir 'README.md')){Copy-Item (Join-Path $UpstreamDir 'README.md') (Join-Path $stage 'UPSTREAM-README.md') -Force}
+if($name -eq 'pgtap'){
+  # Source LICENSE and UPSTREAM-README.md from the pinned upstream blob so the
+  # packaged bytes are the original bytes, not a working-tree copy whose line
+  # endings the Windows checkout may have converted. The upstream HEAD was
+  # already verified against config/extension.json above ($sha).
+  $psi=[Diagnostics.ProcessStartInfo]::new()
+  $psi.FileName='git'
+  $psi.Arguments="-C `"$UpstreamDir`" cat-file blob HEAD:README.md"
+  $psi.RedirectStandardOutput=$true
+  $psi.UseShellExecute=$false
+  $proc=[Diagnostics.Process]::Start($psi)
+  $ms=[IO.MemoryStream]::new()
+  $proc.StandardOutput.BaseStream.CopyTo($ms)
+  $proc.WaitForExit()
+  if($proc.ExitCode -ne 0){throw 'Could not read pinned upstream README.md blob'}
+  $readmeBytes=$ms.ToArray()
+  [IO.File]::WriteAllBytes((Join-Path $stage 'UPSTREAM-README.md'),$readmeBytes)
+  $marker=[Text.Encoding]::ASCII.GetBytes('Copyright (c)')
+  $start=-1
+  for($i=0;$i -le $readmeBytes.Length-$marker.Length;$i++){
+    $match=$true
+    for($j=0;$j -lt $marker.Length;$j++){if($readmeBytes[$i+$j] -ne $marker[$j]){$match=$false;break}}
+    if($match){$start=$i;break}
+  }
+  if($start -lt 0){throw 'License range start not found in pinned upstream README.md'}
+  $licenseBytes=[byte[]]::new($readmeBytes.Length-$start)
+  [Array]::Copy($readmeBytes,$start,$licenseBytes,0,$licenseBytes.Length)
+  [IO.File]::WriteAllBytes((Join-Path $stage 'LICENSE'),$licenseBytes)
+}else{
+  Copy-Item (Join-Path $PSScriptRoot '../../LICENSE') (Join-Path $stage 'LICENSE') -Force
+  if(Test-Path (Join-Path $UpstreamDir 'README.md')){Copy-Item (Join-Path $UpstreamDir 'README.md') (Join-Path $stage 'UPSTREAM-README.md') -Force}
+}
 Copy-Item (Join-Path $PSScriptRoot '../../README.md') (Join-Path $stage 'PGEXTWIN-README.md') -Force
 $info=@"
 $name unofficial Windows x64 package
