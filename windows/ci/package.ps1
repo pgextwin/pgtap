@@ -16,7 +16,7 @@ if($LASTEXITCODE -ne 0 -or $sha -cne [string]$c.upstream.commit -or
    $UpstreamRepository -cne [string]$c.upstream.repository -or
    $UpstreamRef -cne [string]$c.upstream.ref -or
    $UpstreamVersion -cne [string]$c.upstream.version -or
-   $PostgreSqlMajor -notin @(14,15,16,17,18) -or
+   $PostgreSqlMajor -notin @(14,15,16,17,18,19) -or
    $PostgreSqlMinor -notmatch ('^'+$PostgreSqlMajor+'\.')){throw 'Package identity mismatch'}
 # Preserve central SHA-pinned upstream ref as exact Release asset name.
 $label="$name-$UpstreamRef-pg$PostgreSqlMajor-windows-x64"

@@ -5,7 +5,7 @@ param([Parameter(Mandatory=$true)][string]$PgRoot,
       [Parameter(Mandatory=$true)][int]$PostgreSqlMajor)
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
-if($PostgreSqlMajor -notin @(14,15,16,17,18)){throw 'PG14-18 only'}
+if($PostgreSqlMajor -notin @(14,15,16,17,18,19)){throw "Unsupported PostgreSQL major: $PostgreSqlMajor"}
 $name=(Get-Content (Join-Path $PSScriptRoot '../../config/extension.json') -Raw | ConvertFrom-Json).name
 $bin=Join-Path $PgRoot 'bin'
 $temp=if($env:RUNNER_TEMP){$env:RUNNER_TEMP}else{[IO.Path]::GetTempPath()}
