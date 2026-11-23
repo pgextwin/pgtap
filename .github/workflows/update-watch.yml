@@ -88,7 +88,7 @@ jobs:
       actions: read
       pull-requests: read
       checks: read
-    uses: pgextwin/build/.github/workflows/automatic-postmerge-audit-readonly.yml@7788623fa49e56b1301090bea4f023ea86405657
+    uses: pgextwin/build/.github/workflows/automatic-postmerge-audit-readonly.yml@6b6dbab7128394a666fdb97e3bcccb29cf67c090
 
   candidate_attested_build:
     name: Attest original candidate after verified protected main merge (NO PUBLISH)
@@ -103,7 +103,7 @@ jobs:
       id-token: write
       attestations: write
       artifact-metadata: write
-    uses: pgextwin/build/.github/workflows/build-extension-attested.yml@5756b3c5136a8bf4db710016cfe97555f0a71c6d
+    uses: pgextwin/build/.github/workflows/build-extension-attested.yml@0edaa7b3c08f1aa17d89cf8625dc537df21c1b58
     with:
       extension_config_path: config/extension.json
       test_contract_path: config/test-contract.json
@@ -120,7 +120,7 @@ jobs:
       contents: read
       actions: read
       attestations: read
-    uses: pgextwin/build/.github/workflows/verify-signed-candidate-readonly.yml@0ba07c7ad9fdbf20afba0a10264ecadb01ecc3df
+    uses: pgextwin/build/.github/workflows/verify-signed-candidate-readonly.yml@4e02e4c7ba0f3748ab19d54409ffc443a0809c14
 
 # GitHub native Auto-merge via GITHUB_TOKEN was proven to merge without triggering
 # a protected-main push Windows CI (PR #41, merge d48f8e8). Fail closed: do not
